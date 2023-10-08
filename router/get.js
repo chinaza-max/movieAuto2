@@ -1,6 +1,8 @@
 import express from 'express';
 const router=express.Router();
 import  puppeteer from 'puppeteer';
+import 'dotenv/config'
+
 let movies='';
 
 
@@ -12,7 +14,11 @@ router.get('/home',async (req, res)=>{
           console.log("LAUNCHING")
           const browser = await puppeteer.launch({
             headless: true,
-            args: ['--no-sandbox','--disable-setuid-sandbox']
+            args: ['--no-sandbox','--disable-setuid-sandbox'],
+            executablePath:
+            process.env.NODE_ENV === "production"
+              ? process.env.PUPPETEER_EXECUTABLE_PATH
+              : puppeteer.executablePath(),
           });
 
           const page = await browser.newPage();
