@@ -33,10 +33,11 @@ router.get('/home',async (req, res)=>{
           });
 
           page.setDefaultNavigationTimeout(0);
-          await page.waitForSelector('.data a');
 
           console.log("ACCESSING SITE")
           await page.goto('https://o2tvseries.com/search/list_all_tv_series');
+          await page.waitForSelector('.data a');
+
           console.log("started")
           movies = await page.evaluate(() => Array.from(document.querySelectorAll('.data a'), element =>{
             return(
